@@ -9,7 +9,7 @@
     "prettier:watch": "onchange '**/*.{js,css,html,md}' -- prettier --write {{changed}}",
     "prettier": "prettier **/*.{js,css,html,md} --write"
   },
-  "author": "Fredrik Teschke <f@ftes.de>",
+  "author": "Alex Weissörtel <hi@alex-co.de>",
   "license": "MIT",
   "dependencies": {
     "chordsheetjs": "^4.7.1"

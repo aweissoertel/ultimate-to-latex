@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html class="h-100">
   <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NV63GT0THH"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-NV63GT0THH', { client_storage: 'none' });
-    </script>
     <title>Ultimate Guitar to ChordPro Converter</title>
     <meta
       name="description"
@@ -25,15 +18,12 @@
     />
   </head>
   <body class="d-flex flex-column h-100">
-    <header class="text-center p-4 mb-4 bg-info text-white">
-      Need more? Create & share songbooks from your favorite tabs with <a class="text-warning" href="https://chordbook.pro">Chordbook Pro</a>.
-    </header>
-    <main class="flex-shrink-0">
-      <div class="container">
-        <div class="row">
+    <main class="h-100">
+      <div class="p-4 h-100">
+        <div class="row h-100">
           <div class="col-md-5">
             <h2>Input</h2>
-            <textarea id="ultimate" class="form-control convert-input">
+            <textarea id="ultimate" class="form-control convert-input h-75">
 [Verse]
 Am               G
 Alas my love, you do me wrong
@@ -76,33 +66,24 @@ and who but my lady Greensleeves.
             <br />
             To:
             <select class="form-control" id="to-format">
-              <option value="chordpro" selected="selected">ChordPro</option>
-              <option value="latex">Latex</option>
+              <option value="chordpro">ChordPro</option>
+              <option value="latex" selected="selected">Latex</option>
               <option value="ultimate">Ultimate Guitar</option>
             </select>
           </div>
           <div class="col-md-5">
             <h2>Output</h2>
-            <textarea id="chordpro" class="form-control convert-output"></textarea>
+            <textarea id="chordpro" class="form-control convert-output h-75"></textarea>
           </div>
         </div>
         <hr class="my-4" />
-        <div class="row my-4 justify-content-center">
-          <form name="idea" method="post" data-netlify="true" class="d-flex flex-column">
-            <h3>Missing a feature?</h3>
-            <label for="message">Let me know how this tool can be improved.</label>
-            <textarea id="message" name="message" rows="6"></textarea>
-            <button type="submit" class="mt-2 btn btn-secondary w-100">Send feedback</button>
-          </form>
-        </div>
-      </div>
     </main>
 
     <footer class="footer mt-auto py-3">
       <div class="container text-muted">
         <div class="row">
           <div class="col-md-12">
-            <p>© 2023 Fredrik Teschke</p>
+            <p>© 2024 Alex Weissörtel</p>
             <p>
               Convert chordsheets between
               <a href="https://www.ultimate-guitar.com">Ultimate Guitar</a>,

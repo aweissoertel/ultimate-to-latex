@@ -11,7 +11,7 @@ import Tag, {
 } from 'chordsheetjs/lib/chord_sheet/tag'
 import ChordLyricsPair from 'chordsheetjs/lib/chord_sheet/chord_lyrics_pair'
 
-const NEW_LINE = '\n'
+const NEW_LINE = '\\\\\n'
 const flatMap = (arr, fn) => arr.reduce((acc, x) => [...acc, ...fn(x)], [])
 
 /**
@@ -35,7 +35,7 @@ class LatexFormatter {
       this.formatHeaderTags(song),
       this.formatOther(song),
       '\\endsong'
-    ].join(NEW_LINE)
+    ].join('\n')
   }
 
   formatHeaderTags (song) {
@@ -56,7 +56,15 @@ class LatexFormatter {
   }
 
   formatOther (song) {
-    return song.lines.map((line) => this.formatLine(line)).join(NEW_LINE)
+    const tags = ['\\textcomment', '\\capo', '\\beginchorus', '\\endchorus', '\\beginverse', '\\endverse'];
+    return song.lines.map((line) => this.formatLine(line)).reduce((accumulator, current, index, array) => {
+      const lastElem = index > 0 ? array[index - 1] : '';
+      if (tags.some(tag => lastElem.includes(tag) || lastElem === '')) {
+        return accumulator + '\n' + current;
+      } else {
+        return accumulator + NEW_LINE + current;
+      }
+    })
   }
 
   formatLine (line) {
@@ -78,7 +86,7 @@ class LatexFormatter {
   formatTag (tag) {
     switch (tag.name) {
       case COMMENT:
-        return `\\textcomment{${tag.value}}`
+        return `\\beginverse %AM ENDE \\endverse EINFÜGEN!`
       case CAPO:
         return `\\capo{${tag.value}}`
       case START_OF_CHORUS:
