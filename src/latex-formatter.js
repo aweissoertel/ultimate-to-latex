@@ -56,9 +56,26 @@ class LatexFormatter {
   }
 
   formatOther (song) {
+    let verseOpened = false;
+    let chorusOpened = false;
     const tags = ['\\textcomment', '\\capo', '\\beginchorus', '\\endchorus', '\\beginverse', '\\endverse'];
     return song.lines.map((line) => this.formatLine(line)).reduce((accumulator, current, index, array) => {
       const lastElem = index > 0 ? array[index - 1] : '';
+      if (current.includes('\\beginverse') && !verseOpened && !chorusOpened) {
+        verseOpened = true
+      } else if (current.includes('\\beginchorus') && !chorusOpened) {
+        chorusOpened = true;
+      } else if (current.includes('\\beginverse') && verseOpened) {
+        return accumulator + '\\endverse\n' + current;
+      } else if (current.includes('\\beginverse') && chorusOpened) {
+        chorusOpened = false;
+        verseOpened = true;
+        return accumulator + '\\endchorus\n' + current;
+      } else if (current.includes('\\endverse')) {
+        verseOpened = false;
+      } else if (current.includes('\\endchorus')) {
+        chorusOpened = false;
+      }
       if (tags.some(tag => lastElem.includes(tag) || lastElem === '')) {
         return accumulator + '\n' + current;
       } else {
@@ -86,7 +103,7 @@ class LatexFormatter {
   formatTag (tag) {
     switch (tag.name) {
       case COMMENT:
-        return `\\beginverse %AM ENDE \\endverse EINFÜGEN!`
+        return tag.value?.includes('horus') ? '\\beginchorus' : '\\beginverse'
       case CAPO:
         return `\\capo{${tag.value}}`
       case START_OF_CHORUS:
