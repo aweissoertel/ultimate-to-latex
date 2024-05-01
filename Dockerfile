@@ -1,4 +1,5 @@
-FROM node:16 as build
+FROM node:22 as build
+ENV LANG=de_DE.UTF-8
 
 WORKDIR /usr/src/app
 

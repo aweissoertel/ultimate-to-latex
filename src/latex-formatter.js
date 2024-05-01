@@ -32,27 +32,66 @@ class LatexFormatter {
    */
   format (song) {
     return [
-      this.formatHeaderTags(song),
+      this.getHeader(song),
       this.formatOther(song),
       '\\endsong'
     ].join('\n')
   }
 
-  formatHeaderTags (song) {
-    const headerTags = flatMap(song.lines, (line) => line.items)
-      .filter(this.isHeaderTag)
-      .reduce(
-        (tmp, tag) => ({
-          ...tmp,
-          [tag.name]: tag
-        }),
-        {}
-      )
-    const title = headerTags.title && headerTags.title.value
-    const subtitle = headerTags.subtitle && headerTags.subtitle.value
-    const artist = headerTags.artist ? headerTags.artist.value : ''
-    const titleString = title + (subtitle ? ` \\\\ ${subtitle}` : '')
-    return `\\beginsong{${titleString}}[by={${artist}}]`
+  getHeader (song) {
+    return `\\songcolumns{1} % auf wie viele Spalten ist das Lied aufgeteilt. Standard: 1
+
+\\beginsong{Liedname} % Name des Liedes
+  [by={-}, % Autor des Liedes 
+  LSVE={???}, % Liederbuchnummer im alten Swapingo Liederbuch
+  LCopacaBeLa={???}, % Seitennuummer im CopacaBeLa Liederbuch
+  LIsarBeLa={???}, % Liederbuchnummer im IsarBeLa Liederbuch
+  LLiederbock={???}, % Seitennummer im Liederbock
+  LDoppelbock={???}] % Seitennummer im Doppelbock
+
+
+\\capo{1} % Capo Nummer
+
+\\gtab{A}{X02220:001230}\ \ \ \ \
+
+\\gtab{Am}{X02210:002310}\ \ \ \ \
+
+\\gtab{A7}{X02020:001020}\ \ \ \ \
+
+\\gtab{C}{X32010:032010}\ \ \ \ \
+
+\\gtab{Cmaj7}{X32000:032000}\ \ \ \ \
+
+\\gtab{D}{XX0232:000132}\ \ \ \ \
+
+\\gtab{Dm}{XX0231:000231}\ \ \ \ \
+
+\\gtab{Dm7}{XX02(11):000200}\ \ \ \ \
+
+\\gtab{D7}{XX0232:000132}\ \ \ \ \
+
+\\gtab{D/F#}{(254232):043020}\ \ \ \ \
+
+\\gtab{E}{022100:023100}\ \ \ \ \
+
+\\gtab{Em}{022000:012000}\ \ \ \ \
+
+\\gtab{Em7}{020000:010000}\ \ \ \ \
+
+\\gtab{E7}{020100:020100}\ \ \ \ \
+
+\\gtab{F}{(133211):034200}\ \ \ \ \
+
+\\gtab{G}{320003:210003}\ \ \ \ \
+
+\\gtab{Gsus4}{330013:230014}\ \ \ \ \
+
+\\gtab{Hm}{2:X(24432):003420}\ \ \ \ \
+
+\\gtab{H7}{X21202:021304}\ \ \ \ \
+
+
+    `;
   }
 
   formatOther (song) {
